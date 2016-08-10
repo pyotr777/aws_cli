@@ -52,7 +52,7 @@ The following shortcut commands are available.
 * awsterminate
 
    Terminate (delete) one or more instances.
-   Usage: awsterminate <instance id or tag Name> [<instance id or tag Name> ...]
+   Usage: `awsterminate <instance id or tag Name> [<instance id or tag Name> ...]`
 
 ### Note
 
