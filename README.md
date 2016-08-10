@@ -16,7 +16,7 @@ The following shortcut commands are available.
 * awsip
 
    Show assigned IP address of EC2 instance.
-   Usage: `Usage: $(basename $0) <instance id or tag Name>`.
+   Usage: `$(basename $0) <instance id or tag Name>`.
 
 * awsipls
 
@@ -46,7 +46,7 @@ The following shortcut commands are available.
 
 * awstag
 
-   Assign instance a tag with name "Name."
+   Assign instance a tag with name "Name".
    Usage: `awstag <instance ID> <tag value>`.
 
 * awsterminate
