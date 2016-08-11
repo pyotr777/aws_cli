@@ -1,7 +1,6 @@
 #!/bin/bash
 # Launch new instance and assign it Name tag
 
-echo $#
 usage="Usage: $(basename $0) <launch parameters json file> [<tag>]"
 if [[ $# -le 0 ]]; then 
 	echo "$usage"
