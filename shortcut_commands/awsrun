@@ -68,7 +68,7 @@ for i in $(seq 1 $N); do
 	echo "Started with ID $ID"
 	echo "IP: $(awsip $ID)"
 	if [ $N -gt 1 ] && [ -n "$NAME_TAG" ]; then
-		TAG="$NAME_TAG$N"
+		TAG="$NAME_TAG$i"
 		awstag $ID $TAG
 		aws ec2 describe-tags --output text | grep "$ID"
 	fi
