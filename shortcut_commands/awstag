@@ -1,2 +1,17 @@
 #!/bin/bash
-aws ec2 create-tags --resources $1 --tags Value=$2,Key=Name
+# Assign provided string to Name tag of the instance with given ID.
+# If no tag value is provided, show Name tag for instance with given ID.
+# If no ID is provided, show Name IDs for all instances
+
+if [[ $# -lt 1 ]]; then
+	# No arguments provided
+	aws ec2 describe-tags | grep "Name" | awk '{ print $3" "$5 }'
+	exit 0
+elif [[ $# -lt 2 ]]; then
+	# Only ID provided
+	aws ec2 describe-tags --filter "Name=resource-id,Values=$1" | grep "Name" | awk '{ print $5 }'
+	exit 0
+else
+	# ID and tag value are provided
+	aws ec2 create-tags --resources $1 --tags Value=$2,Key=Name
+fi

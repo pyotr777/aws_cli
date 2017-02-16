@@ -1,23 +1,75 @@
 #!/bin/bash
-# Launch new instance and assign it Name tag
+# Launch new instances and assign them Name tags
 
-usage="Usage: $(basename $0) <launch parameters json file> [<tag>]"
-if [[ $# -le 0 ]]; then 
+usage=$(cat <<USAGEBLOCK
+Launch new AWS EC2 instances.
+
+Usage:
+$(basename $0) -f <launch parameters json file> [-n <number>] [-t <name tag base>]
+Options:
+	-f	JSON file with launch parameters. You can generate sample file with command: aws ec2 run-instances --generate-cli-skeleton.
+	-n	Number of instances to launch.
+	-t	Assign the new instances Name tags with this tag base and a number. E.g. -t name will run instances: "name_1", "name_2", ...
+USAGEBLOCK
+)
+
+if [[ $# < 1 ]]; then
+    echo "$usage"
+    exit 1
+fi
+
+# Defaults
+# Number of instances to launch
+N=1
+
+while test $# -gt 0; do
+    case "$1" in
+        -h | --help)
+            echo "$usage"
+            exit 0
+            ;;
+        -f)
+            FILE="$2";shift;
+            ;;
+        -n)
+            N="$2";shift;
+            ;;
+        -t)
+            NAME_TAG="$2";shift;
+            ;;
+        --)
+            shift
+            break;;
+        -*)
+            echo "Invalid option: $1"
+            echo "$usage"
+            exit 1;;
+    esac
+    shift
+done
+
+if [[ -z "$FILE" ]]; then
+	echo "Need JSON file name."
 	echo "$usage"
-	exit 0
-elif [[ $# -eq 1 ]]; then
-	aws ec2 run-instances --cli-input-json file://$1
-else
-	echo "Start and assign tag $2"
-	output="$(aws ec2 run-instances --cli-input-json file://$1 --output text)"	
+	exit 1
+fi
+
+set -e
+
+for i in $(seq 1 $N); do
+	echo $i
+	output="$(aws ec2 run-instances --cli-input-json file://$FILE --output text)"
 	ID="$( eval 'echo "$output"' | grep 'INSTANCES' | awk '{print $7}')"
 	if [[ -z "$ID" ]]; then
 		echo "Couldnt get instance ID from :"
 		echo "$output"
 		exit 1
-	else
-		echo "Started with ID $ID"	
 	fi
-	awstag $ID $2
-	aws ec2 describe-tags --output text | grep "$ID"
-fi
+	echo "Started with ID $ID"
+	echo "IP: $(awsip $ID)"
+	if [ $N -gt 1 ] && [ -n "$NAME_TAG" ]; then
+		TAG="$NAME_TAG_$N"
+		awstag $ID $TAG
+		aws ec2 describe-tags --output text | grep "$ID"
+	fi
+done

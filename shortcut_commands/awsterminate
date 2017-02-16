@@ -6,7 +6,10 @@ if [[ $# < 1 ]]; then
 fi
 while test $# -gt 0; do
 	# Get ID by ID or tag
-	ID="$(awsls -s | grep $1 | awk '{ print $1 }')"
+	ID="$(awsls -t | grep $1 | awk '{ print $1 }')"
+	if [[ -z "$ID" ]]; then
+		ID=$1
+	fi
 	aws ec2 terminate-instances --instance-ids $ID
 	shift
 done
