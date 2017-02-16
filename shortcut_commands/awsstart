@@ -6,5 +6,5 @@ if [[ $# < 1 ]]; then
 fi
 
 # Get ID by ID or tag
-ID="$(awsls -s | grep $1 | awk '{ print $1 }')"
+ID="$(awsls -t | grep $1 | awk '{ print $1 }')"
 aws ec2 start-instances --instance-ids $ID

@@ -9,7 +9,7 @@ $(basename $0) -f <launch parameters json file> [-n <number>] [-t <name tag base
 Options:
 	-f	JSON file with launch parameters. You can generate sample file with command: aws ec2 run-instances --generate-cli-skeleton.
 	-n	Number of instances to launch.
-	-t	Assign the new instances Name tags with this tag base and a number. E.g. -t name will run instances: "name_1", "name_2", ...
+	-t	Assign the new instances Name tags with this tag base and a number. E.g. -t name will run instances: "name1", "name2", ...
 USAGEBLOCK
 )
 
@@ -68,7 +68,7 @@ for i in $(seq 1 $N); do
 	echo "Started with ID $ID"
 	echo "IP: $(awsip $ID)"
 	if [ $N -gt 1 ] && [ -n "$NAME_TAG" ]; then
-		TAG="$NAME_TAG_$N"
+		TAG="$NAME_TAG$N"
 		awstag $ID $TAG
 		aws ec2 describe-tags --output text | grep "$ID"
 	fi

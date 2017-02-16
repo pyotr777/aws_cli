@@ -52,7 +52,7 @@ else
 	if [[ -z "$ID" ]]; then
 		aws ec2 describe-tags --output text | awk '{ print $3"\t"$5 }'
 	else
-		aws ec2 describe-tags --filter "Name=resource-id,Values=$ID" --output text | awk '{ print $3"\t"$5 }'
+		aws ec2 describe-tags --filters "Name=tag:Name,Values=$ID" --output text | awk '{ print $3"\t"$5 }'
 	fi
 fi
 
