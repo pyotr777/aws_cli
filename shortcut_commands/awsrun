@@ -10,6 +10,11 @@ Options:
 	-f	JSON file with launch parameters. You can generate sample file with command: aws ec2 run-instances --generate-cli-skeleton.
 	-n	Number of instances to launch.
 	-t	Assign the new instances Name tags with this tag base and a number. E.g. -t name will run instances: "name1", "name2", ...
+
+Profiles:
+Configure additional (not default) profiles with  .aws/credential and .aws/config.
+    Docs: http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html#cli-multiple-profiles
+Switch profile used by this command with --profile <profile_name> option.
 USAGEBLOCK
 )
 
@@ -36,6 +41,9 @@ while test $# -gt 0; do
             ;;
         -t)
             NAME_TAG="$2";shift;
+            ;;
+        --profile)
+            PROFILE="--profile $2"; shift;
             ;;
         --)
             shift
