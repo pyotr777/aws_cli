@@ -15,24 +15,35 @@ The following shortcut commands are available.
 
 * awsip
 
-   Show assigned IP address of EC2 instance.
+   Show public IP address of an EC2 instance.
    Usage: `$(basename $0) <instance id or tag Name>`.
 
 * awsipls
 
    List Elastic IP addresses.
 
-* awsls
+* __awsls__
 
-   List instances IDs, tag "Name" values and instance states (running, stopped, pending,...).
-   With -s option prints only instance IDs and tag "Name" value.
+   List instances IDs, tag "Name" values, instance states (running, stopped, pending,...) and IPs .
+   With -t option prints only IDs and Name tags.
+	With -i option prints only public IPs of running instances.
+	With instance ID after options -t or -i shows only Name tag or public IP address for the given instance.
+	
+	Switch profile used by this command with `--profile <profile_name>` option.
+	
+   
 
-* awsrun
+* __awsrun__
 
    Create and launch a new instance.
    Usage: `awsrun <launch parameters json file> [<tag>]`.
-   JSON file must be created beforehand with `aws ec2 run-instances --generate-cli-skeleton ...` command. For details refer to http://docs.aws.amazon.com/cli/latest/reference/ec2/run-instances.html.
-   If <tag> argument given, the new instance will be tagged.
+   
+   JSON file must be created beforehand with `aws ec2 run-instances --generate-cli-skeleton ...` command. For details refer to [run-instances](http://docs.aws.amazon.com/cli/latest/reference/ec2/run-instances.html).
+   
+   If `<tag>` argument is given the new instance will be tagged.
+   
+   Switch profile used by this command with `--profile <profile_name>` option.
+	
 
 * awsstart
 
@@ -46,17 +57,31 @@ The following shortcut commands are available.
 
 * awstag
 
-   Assign instance a tag with name "Name".
-   Usage: `awstag <instance ID> <tag value>`.
+   Show or assign instance a tag with name "Name".
+
+   `awstag <instance ID> <tag value>` – assign tag,
+   
+   `awstag <instance ID>` – show tag for the given instance, 
+   
+   `awstag` – lists tags for all instances.
+   
+   Switch profile used by this command with `--profile <profile_name>` option.
+	
 
 * awsterminate
 
    Terminate (delete) one or more instances.
    Usage: `awsterminate <instance id or tag Name> [<instance id or tag Name> ...]`
 
-### Note
+### Notes
 
-Most shortcut commands accept tags as well as EC2 instance IDs as arguments, but only tags with name "Name". EC2 tags have names and values. For details refer to http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html.
+Most shortcut commands accept tags as well as EC2 instance IDs as arguments, but only tags with name "Name". EC2 tags have names and values. For details refer to [Tagging Your Amazon EC2 Resources](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html).
+
 To give EC2 instance a tag "Name" use: `awstag <ID> <tag>`.
+
+**Profiles**  
+You can configure additional (not default) profiles in  .aws/credential and .aws/config files. 
+	For details see: [Named Profiles](http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html#cli-multiple-profiles)
+
 
 
