@@ -1,4 +1,8 @@
-# AWS EC2 CLI Docker image
+# AWS EC2 Command-line Interface in Docker
+
+## Setup and basic usage
+
+https://youtu.be/2ZjszQzjL4g
 
 ## Commands
 
