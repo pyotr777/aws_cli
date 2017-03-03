@@ -9,7 +9,8 @@ $(basename $0) [-t [<instance ID>]]
 
 With no options prints ID, State and Tags for all instances.
 With -t option prints only IDs and Name tags.
-With instance ID after option -t shows only Name tag for the given instance.
+With -i option prints only public IPs of running instances.
+With instance ID after options -t or -i shows only Name tag or public IP address for the given instance.
 USAGEBLOCK
 )
 
@@ -21,6 +22,10 @@ while test $# -gt 0; do
             ;;
         -t)
 			PRINT_TAG="1"
+			ID="$2";shift;
+            ;;
+        -i)
+			PRINT_IPS="1"
 			ID="$2";shift;
             ;;
         --)
@@ -36,23 +41,30 @@ done
 
 #echo "PRINT_TAG=$PRINT_TAG, ID=$ID."
 
-if [[ -z "$PRINT_TAG" ]]; then
-	LS=$(aws ec2 describe-instances --output json | jq -r -c ".Reservations[] | .Instances[] | [.InstanceId, .State.Name, .KeyName,.ImageId] | @csv" | sed 's/\"//g')
-	arr=( $(echo "$LS") )
-	FORMAT='%-20s\t%-15s\t%-15s\t%-20s\t%-15s\t%-15s\n'
-	printf $FORMAT "ID" "TAG" "STATE" "IP" "KEY" "IMAGE"
-	for line in "${arr[@]}"; do
-		IFS=$','; words=( $(echo "$line") )
-		ID=${words[0]}
-		TAG=$(awstag $ID)
-		IP=$(aws ec2 describe-instances --instance-ids $ID --query 'Reservations[0].Instances[0].PublicIpAddress')
-		printf $FORMAT "$ID" "$TAG" "${words[1]}" "$IP" "${words[2]}" "${words[3]}"
-	done
-else
-	if [[ -z "$ID" ]]; then
+if [[ -z "$ID" ]]; then
+	if [[ -n "$PRINT_TAG" ]]; then
 		aws ec2 describe-tags --output text | awk '{ print $3"\t"$5 }'
+	elif [[ -n "$PRINT_IPS" ]]; then
+		aws ec2 describe-instances --filters "Name=instance-state-name,Values=running" --output json | jq -c -r ".Reservations[] | .Instances[]| [.PublicIpAddress] | @csv " | sed 's/\"//g'
 	else
+		LS=$(aws ec2 describe-instances --output json | jq -r -c ".Reservations[] | .Instances[] | [.InstanceId, .State.Name, .KeyName,.ImageId, .PublicIpAddress] | @csv" | sed 's/\"//g')
+		arr=( $(echo "$LS") )
+		FORMAT='%-20s\t%-15s\t%-15s\t%-20s\t%-15s\t%-15s\n'
+		printf $FORMAT "ID" "TAG" "STATE" "IP" "KEY" "IMAGE"
+		for line in "${arr[@]}"; do
+			IFS=$','; words=( $(echo "$line") )
+			ID=${words[0]}
+			TAG=$(awstag $ID)
+			#IP=$(aws ec2 describe-instances --instance-ids $ID --query 'Reservations[0].Instances[0].PublicIpAddress')
+			IP=${words[4]}
+			printf $FORMAT "$ID" "$TAG" "${words[1]}" "$IP" "${words[2]}" "${words[3]}"
+		done
+	fi
+else
+	if [[ -n "$PRINT_TAG" ]]; then
 		aws ec2 describe-tags --filters "Name=tag:Name,Values=$ID" --output text | awk '{ print $3"\t"$5 }'
+	else
+		aws ec2 describe-instances --filters "Name=tag:Name,Values=$ID" "Name=instance-state-name,Values=running" --output json | jq -c -r ".Reservations[] | .Instances[] | [.PublicIpAddress] | @csv " | sed 's/\"//g'
 	fi
 fi
 
