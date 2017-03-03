@@ -1,1 +1,2 @@
-docker run -ti -v /Users/peterbryzgalov/work/AWS_CLI:/root --name aws pyotr777/aws
+IMAGE_NAME="pyotr777/aws"
+docker run -ti -v $(pwd):/root --name aws $IMAGE_NAME

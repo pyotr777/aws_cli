@@ -1,1 +1,2 @@
-docker build --rm -t pyotr777/aws -f Dockerfile .
+IMAGE_NAME="pyotr777/aws"
+docker build --rm -t $IMAGE_NAME -f Dockerfile .

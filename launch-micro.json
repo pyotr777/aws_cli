@@ -1,19 +1,16 @@
 {
-    "DryRun": false, 
-    "ImageId": "ami-a21529cc", 
-    "MinCount": 1, 
-    "MaxCount": 1, 
-    "KeyName": "kportal-key", 
+    "DryRun": false,
+    "ImageId": "ami-a21529cc",
+    "MinCount": 1,
+    "MaxCount": 1,
+    "KeyName": "id_rsa_com",
     "SecurityGroups": [
-        "kportal"
-    ], 
-    "SecurityGroupIds": [
-        "sg-4d5f2829"
-    ], 
-    "InstanceType": "t2.micro", 
+        "celery-rabbit"
+    ],
+    "InstanceType": "t2.micro",
     "Placement": {
         "AvailabilityZone": "ap-northeast-1a"
-    }, 
+    },
     "Monitoring": {
         "Enabled": true
     }

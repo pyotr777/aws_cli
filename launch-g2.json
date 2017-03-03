@@ -1,0 +1,17 @@
+{
+    "DryRun": false, 
+    "ImageId": "ami-f4cc1de2",
+    "MinCount": 1, 
+    "MaxCount": 1, 
+    "KeyName": "id_rsa_com", 
+    "SecurityGroups": [
+        "Celery-master"
+    ], 
+    "InstanceType": "g2.2xlarge", 
+    "Placement": {
+        "AvailabilityZone": "us-east-1a"
+    }, 
+    "Monitoring": {
+        "Enabled": true
+    }
+}
