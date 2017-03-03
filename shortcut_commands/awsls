@@ -62,7 +62,7 @@ if [[ -z "$ID" ]]; then
 		for line in "${arr[@]}"; do
 			IFS=$','; words=( $(echo "$line") )
 			ID=${words[0]}
-			TAG=$(awstag $ID)
+			TAG=$(eval "shortcut_commands/awstag $ID $PROFILE")
 			#IP=$(aws ec2 describe-instances --instance-ids $ID --query 'Reservations[0].Instances[0].PublicIpAddress')
 			IP=${words[4]}
 			printf $FORMAT "$ID" "$TAG" "${words[1]}" "$IP" "${words[2]}" "${words[3]}"
