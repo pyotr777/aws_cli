@@ -5,7 +5,7 @@
     "MaxCount": 1,
     "KeyName": "id_rsa_com",
     "SecurityGroups": [
-        "launch-wizard-1"
+        "launch-wizard-2"
     ],
     "InstanceType": "t2.small",
     "BlockDeviceMappings": [

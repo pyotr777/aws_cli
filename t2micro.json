@@ -5,11 +5,11 @@
     "MaxCount": 1,
     "KeyName": "id_rsa_com",
     "SecurityGroups": [
-        "Celery-master"
+        "celery-rabbit"
     ],
     "InstanceType": "t2.micro",
     "Placement": {
-        "AvailabilityZone": "us-east-1a"
+        "AvailabilityZone": "ap-northeast-1a"
     },
     "Monitoring": {
         "Enabled": true

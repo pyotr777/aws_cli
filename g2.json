@@ -1,5 +1,5 @@
 {
-    "DryRun": true, 
+    "DryRun": false, 
     "ImageId": "ami-f4cc1de2",
     "MinCount": 1, 
     "MaxCount": 1, 
@@ -8,9 +8,14 @@
         "launch-wizard-1"
     ], 
     "InstanceType": "g2.2xlarge", 
-    "Ebs": {
-      "VolumeSize": 16,
-    }
+    "BlockDeviceMappings": [
+        {
+            "DeviceName": "/dev/sda1",
+            "Ebs": {
+                "VolumeSize": 16
+            }
+        }
+    ],
     "Placement": {
         "AvailabilityZone": "us-east-1a"
     }, 
