@@ -1,0 +1,25 @@
+{
+    "DryRun": false,
+    "ImageId": "ami-f4cc1de2",
+    "MinCount": 1,
+    "MaxCount": 1,
+    "KeyName": "id_rsa_com",
+    "SecurityGroups": [
+        "launch-wizard-1"
+    ],
+    "InstanceType": "t2.small",
+    "BlockDeviceMappings": [
+        {
+            "DeviceName": "/dev/sda1",
+            "Ebs": {
+                "VolumeSize": 16
+            }
+        }
+    ],
+    "Placement": {
+        "AvailabilityZone": "us-east-1a"
+    },
+    "Monitoring": {
+        "Enabled": true
+    }
+}

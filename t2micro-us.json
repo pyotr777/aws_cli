@@ -1,15 +1,15 @@
 {
     "DryRun": false,
-    "ImageId": "ami-a21529cc",
+    "ImageId": "ami-f4cc1de2",
     "MinCount": 1,
     "MaxCount": 1,
     "KeyName": "id_rsa_com",
     "SecurityGroups": [
-        "celery-rabbit"
+        "Celery-master"
     ],
     "InstanceType": "t2.micro",
     "Placement": {
-        "AvailabilityZone": "ap-northeast-1a"
+        "AvailabilityZone": "us-east-1a"
     },
     "Monitoring": {
         "Enabled": true
