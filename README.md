@@ -2,27 +2,38 @@
 
 ## Setup and basic usage
 
-https://youtu.be/2ZjszQzjL4g
+You will need _Access Key ID_, _Secret Access Key_ and _region name_. Read about [Access Keys](http://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys). Find
+[list of AWS regions](http://docs.aws.amazon.com/general/latest/gr/rande.html#awsconfig_region)
 
-## Commands
 
-The following shortcut commands are available.
+For setup instructions see the following video:
+[Setup video on Youtube](https://youtu.be/2ZjszQzjL4g)
 
-* awsassignip
+## Usage
+
+### Start
+
+Start CLI interface for AWS commands in a docker container with `./start_container.sh`.
+
+### Commands
+
+The following shortcut commands are available in docker container.
+
+* __awsassignip__
 
    Assign elastic (fixed) IP address to EC2 instance.
    Usage: `awsassignip <instance id or tag Name> <Elastic IP address>`.
 
-* awshelp
+* __awshelp__
 
    List available shortcut commands.
 
-* awsip
+* __awsip__
 
    Show public IP address of an EC2 instance.
    Usage: `$(basename $0) <instance id or tag Name>`.
 
-* awsipls
+* __awsipls__
 
    List Elastic IP addresses.
 
@@ -49,17 +60,17 @@ The following shortcut commands are available.
    Switch profile used by this command with `--profile <profile_name>` option.
 	
 
-* awsstart
+* __awsstart__
 
    Start stopped instance.
    Usage: `awsstart <instance id or tag Name>`.
 
-* awsstop
+* __awsstop__
 
    Stop running instance.
    Usage: `awsstop <instance id or tag Name>`.
 
-* awstag
+* __awstag__
 
    Show or assign instance a tag with name "Name".
 
@@ -72,7 +83,7 @@ The following shortcut commands are available.
    Switch profile used by this command with `--profile <profile_name>` option.
 	
 
-* awsterminate
+* __awsterminate__
 
    Terminate (delete) one or more instances.
    Usage: `awsterminate <instance id or tag Name> [<instance id or tag Name> ...]`
@@ -81,7 +92,7 @@ The following shortcut commands are available.
 
 Most shortcut commands accept tags as well as EC2 instance IDs as arguments, but only tags with name "Name". EC2 tags have names and values. For details refer to [Tagging Your Amazon EC2 Resources](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html).
 
-To give EC2 instance a tag "Name" use: `awstag <ID> <tag>`.
+To give an EC2 instance tag "Name" use the following shortcut command: `awstag <ID> <tag>`.
 
 **Profiles**  
 You can configure additional (not default) profiles in  .aws/credential and .aws/config files. 
