@@ -1,2 +1,7 @@
 #!/bin/bash
-ls -l /usr/local/bin/aws*
+i=1
+for file in $(ls -o /usr/local/bin/aws* | awk '{ print $8 }' | grep -E "aws[a-z]+"); do
+	help="$($file --help)"
+	echo "$i $help"
+	((i++))
+done

@@ -5,17 +5,21 @@
 
 usage=$(cat <<USAGEBLOCK
 Usage:
-$(basename $0) [-t [<instance ID>]]
+$(basename $0) [-t/-i [<instance ID>]]
 
 With no options prints ID, State and Tags for all instances.
-With -t option prints only IDs and Name tags.
-With -i option prints only public IPs of running instances.
 With instance ID after options -t or -i shows only Name tag or public IP address for the given instance.
 
 Profiles:
 Configure additional (not default) profiles with  .aws/credential and .aws/config.
-	Docs: http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html#cli-multiple-profiles
+Docs:
+http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html#cli-multiple-profiles
 Switch profile used by this command with --profile <profile_name> option.
+
+OPTIONS
+	-h, --help	Display this help.
+	-t 			Print only IDs and Name tags.
+	-i 			Print only public IPs of running instances.
 USAGEBLOCK
 )
 
