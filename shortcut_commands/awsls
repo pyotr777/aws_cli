@@ -52,7 +52,7 @@ while test $# -gt 0; do
 done
 
 #echo "PRINT_TAG=$PRINT_TAG, ID=$ID."
-
+#set -x
 if [[ -z "$ID" ]]; then
 	if [[ -n "$PRINT_TAG" ]]; then
 		aws ec2 $PROFILE describe-tags --output text | awk '{ print $3"\t"$5 }'
